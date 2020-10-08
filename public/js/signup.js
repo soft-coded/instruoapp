@@ -12,50 +12,46 @@ $(document).ready(function(){
             if(data){
                 $("#name-err").html("Email already registered.")
                 nameProb=1
-                probs()
             }
             else{
                 $("#name-err").html("")
                 nameProb=0
-                probs()
             }
+            probs()
         })
     })
     $("#pass").keyup(function(){
         if($(this).val().length<8){
             $("#pass-tip").html("Too short").addClass("text-info")
             passProb=1
-            probs()
         }
         else{
             $("#pass-tip").html("")
             passProb=0
-            probs()
         }
+        probs()
     })
     $("#repass").keyup(function(){
         if($("#pass").val()!=$(this).val()){
             $("#pass-err").html("Passwords do not match.")
             matchProb=1
-            probs()
         }
         else{
             $("#pass-err").html("")
             matchProb=0
-            probs()
         }
+        probs()
     })
     $("#phone").keyup(function(){
         let num=$(this).val()
         if(!num.match(/[0-9]/g) || num.length!=10){
             $("#phone-err").html("Invalid phone number.")
             phoneProb=1
-            probs()
         }
         else{
             $("#phone-err").html("")
             phoneProb=0
-            probs()
         }
+        probs()
     })
 })

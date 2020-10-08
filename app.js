@@ -56,6 +56,7 @@ const userSchema=new mongoose.Schema({
     admin: Boolean,
     googleId: String 
 })
+
 userSchema.plugin(passportLocalMongoose)
 userSchema.plugin(findOrCreate)
 const User=new mongoose.model("User",userSchema)
@@ -157,6 +158,10 @@ app.get("/deletepost/:postId",(req,res)=>{
             else res.redirect("/404")
         }
     })
+})
+
+app.get("/profile/:email",(req,res)=>{
+    res.render("profile")
 })
 /*** Get requests end ***/
 
