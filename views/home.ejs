@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <title>Newsletter</title>
+    <link href="/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    <link href="/css/blog-home.css" rel="stylesheet">
+</head>
+<body style="filter: invert(1); background-color: black;">
+    <!-- Navigation -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
+        <div class="container">
+            <a class="navbar-brand" href="/">Sexy webapp</a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive"
+                aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarResponsive">
+                <ul class="navbar-nav ml-auto">
+                    <li class="nav-item active">
+                        <a class="nav-link" href="/">Home
+                            <span class="sr-only">(current)</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <% if(authed){ %>
+                            <a class="nav-link btn btn-dark" href="/logout">Log Out</a>
+                        <% }else{ %>
+                            <a class="nav-link btn btn-dark" href="/login">Log In</a>
+                        <% } %>
+                    </li>
+                    <% if(!authed){ %>
+                        <li class="nav-item">
+                                <a class="nav-link" href="/signup">Sign Up</a>
+                        </li>
+                    <% } %>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Page Content -->
+    <div class="container">
+
+        <div class="row">
+
+            <!-- Blog Entries Column -->
+            <div class="col-md-8">
+
+                <h1 class="my-4">Recent Articles
+                    <small>for you</small>
+                </h1>
+
+                <!-- Blog Post -->
+                <% news.forEach((item)=>{ %>
+                    <div class="card mb-4">
+                        <div class="card-body">
+                            <h2 class="card-title"><%= item.title.replace(/&lt;/g, '<').replace(/&gt;/g, '>') %></h2>
+                            <p class="card-text"><%= item.heading.replace(/&lt;/g, '<').replace(/&gt;/g, '>') %></p>
+                            <a href="/post/<%= item.postId %>" class="btn btn-primary">Read More &rarr;</a>
+                        </div>
+                        <div class="card-footer text-muted">
+                            Posted on <%= item.date %> by <%= item.op%>
+                        </div>
+                    </div>
+                <% }) %>
+
+                <!-- Blog Post -->
+                <div class="card mb-4">
+                    <div class="card-body">
+                        <h2 class="card-title">Sample Post 2</h2>
+                        <p class="card-text">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Reiciendis
+                            aliquid atque, nulla? Quos cum ex quis soluta, a laboriosam. Dicta expedita corporis animi
+                            vero voluptate voluptatibus possimus, veniam magni quis!</p>
+                        <a href="#" class="btn btn-primary">Read More &rarr;</a>
+                    </div>
+                    <div class="card-footer text-muted">
+                        Posted on 01/01/2020 by Me
+                    </div>
+                </div>
+
+                <!-- Blog Post -->
+                <div class="card mb-4">
+                    <div class="card-body">
+                        <h2 class="card-title">Sample Post 1</h2>
+                        <p class="card-text">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Reiciendis
+                            aliquid atque, nulla? Quos cum ex quis soluta, a laboriosam. Dicta expedita corporis animi
+                            vero voluptate voluptatibus possimus, veniam magni quis!</p>
+                        <a href="#" class="btn btn-primary">Read More &rarr;</a>
+                    </div>
+                    <div class="card-footer text-muted">
+                        Posted on 01/01/2020 by Me
+                    </div>
+                </div>
+
+            </div>
+
+            <!-- Sidebar Widgets Column -->
+            <% if(admin){ %>
+            <div class="col-md-4">
+                <div class="card my-4">
+                    <h5 class="card-header">Create</h5>
+                    <div class="card-body">
+                        <a class="input-group" href="/newpost">
+                            <button class="btn btn-secondary" type="button">Create a post</button>
+                        </a>
+                    </div>
+                </div>
+            </div>
+            <% } %>
+        </div>
+        <!-- /.row -->
+
+    </div>
+    <!-- /.container -->
+
+    <!-- Footer -->
+    <footer class="py-5 bg-dark">
+        <div class="container">
+            <p class="m-0 text-center text-white">Copyright &copy; Your Website 2020</p>
+        </div>
+        <!-- /.container -->
+    </footer>
+
+    <!-- Bootstrap core JavaScript -->
+    <script src="/vendor/jquery/jquery.min.js"></script>
+    <script src="/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Log In</title>
+    <link href="/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.8/css/all.css">
+</head>
+<body style="filter: invert(1); background-color: black;">
+    <div class="container">
+        <div class="card bg-light" style="height: 100vh;">
+            <article class="card-body mx-auto" style="max-width: 400px;">
+                <h1 class="card-title mt-3 text-center">Log In</h1>
+                <a href="/auth/google" class="btn btn-block btn-twitter border border-info"> <i class="fab fa-google"></i> &nbsp;Log In via Google</a>
+                <% if(err){ %>
+                    <div class="text-center text-info font-weight-bold">Invalid username or password.</div>
+                <% } %>
+                <br>
+                <form method="POST" action="/login">
+                    <div class="form-group input-group">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text"> <i class="fa fa-envelope"></i> </span>
+                        </div>
+                        <input name="username" class="form-control" placeholder="Email" type="email">
+                    </div> <!-- form-group// -->
+                    <div class="form-group input-group">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text"> <i class="fa fa-lock"></i> </span>
+                        </div>
+                        <input name="password" class="form-control" placeholder="Password" type="password">
+                    </div> <!-- form-group// -->
+                    <div class="form-group">
+                        <button type="submit" class="btn btn-primary btn-block"> Log In </button>
+                    </div> <!-- form-group// -->
+                    <p class="text-center">Don't have an account? <a href="/signup">Sign Up</a> </p>
+                    <div class="text-center"><a href="/">Back to home</a></div>
+                </form>
+            </article>
+        </div> <!-- card.// -->
+
+    </div>
+    <!--container end.//-->
+    <!-- Bootstrap core JavaScript -->
+    <script src="/vendor/jquery/jquery.min.js"></script>
+    <script src="/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+</body>
+
+</html>
