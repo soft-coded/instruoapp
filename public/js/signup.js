@@ -1,5 +1,5 @@
 $(document).ready(function(){
-    let nameProb=0, passProb=0, matchProb=0, phoneProb=0
+    let nameProb=1, passProb=1, matchProb=1, phoneProb=1
     function probs(){
         if(nameProb || passProb || matchProb || phoneProb)
             $("#signup-btn").attr({type: "button", disabled: true})

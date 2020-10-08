@@ -44,7 +44,11 @@ const newsSchema=new mongoose.Schema({
     post: String,
     date: String,
     op: String,
-    postId: Number
+    postId: Number,
+    likes: {
+        likesNum: Number,
+        likers: [String]
+    }
 })
 
 const userSchema=new mongoose.Schema({
@@ -54,7 +58,8 @@ const userSchema=new mongoose.Schema({
     lastSeen: String,
     phone: String,
     admin: Boolean,
-    googleId: String 
+    googleId: String,
+    liked: [Number]
 })
 
 userSchema.plugin(passportLocalMongoose)
@@ -95,13 +100,11 @@ app.get("/",(req,res)=>{
         if(err) console.log(err)
         else{
             if(req.isAuthenticated()){
-                authed=true
+                authed=req.user.username
                 User.findOne({username: req.user.username},(err,result)=>{
                     if(err) console.log(err)
                     if(result.admin) admin=true
                     res.render("home",{authed: authed, admin: admin, news: news})
-                    result.lastSeen=`on ${new Date().toLocaleDateString()} at ${new Date().toLocaleTimeString()}`
-                    result.save()
                 })
             }
             else res.render("home",{authed: authed, admin: admin, news: news})
@@ -139,9 +142,13 @@ app.get("/post/:postId",(req,res)=>{
         if(err) console.log(err)
         else if(result==null) res.redirect("/404")
         else{
-            if(req.isAuthenticated() && req.user.username==result.op)
-                sameUser=true
-            res.render("post",{post: result, sameUser: sameUser})    
+            let hasLiked=false
+            if(req.isAuthenticated()){
+                if(req.user.username==result.op) sameUser=true
+                let ind=result.likes.likers.indexOf(req.user.username)
+                if(ind>-1) hasLiked=true
+            }    
+            res.render("post",{post: result, sameUser: sameUser, hasLiked: hasLiked})    
         }
     })
 })
@@ -161,47 +168,92 @@ app.get("/deletepost/:postId",(req,res)=>{
 })
 
 app.get("/profile/:email",(req,res)=>{
-    res.render("profile")
+    User.findOne({username: req.params.email},(err,result)=>{
+        if(err) console.log(err)
+        else if(result==null) res.redirect("/404")
+        else{
+            News.find({postId: {$in: result.liked}},(err,likedNews)=>{
+                if(err) return console.log(err)
+                result.lastSeen=`on ${new Date().toLocaleDateString()} at ${new Date().toLocaleTimeString()}`
+                result.save()
+                res.render("profile",{user: result, likedPosts: likedNews})
+            })
+        } 
+    })
+})
+
+app.get("/likepost/:postId",(req,res)=>{
+    let numId=Number(req.params.postId)
+    if(req.isAuthenticated()){
+        News.findOne({postId: numId},(err,result)=>{
+            if(err) return console.log(err)
+            else if(result==null) return res.redirect("/404")
+            User.findOne({username: req.user.username},(err,op)=>{
+                if(err) return console.log(err)
+                let ind=result.likes.likers.indexOf(req.user.username)
+                let stat=0
+                if(ind>-1){
+                    result.likes.likesNum--
+                    op.liked.splice(op.liked.indexOf(numId),1)
+                    result.likes.likers.splice(ind,1)
+                }
+                else{
+                    result.likes.likesNum++
+                    op.liked.push(numId)
+                    result.likes.likers.push(req.user.username)
+                    stat=1
+                }
+                op.save()
+                result.save()
+                res.send({likes: result.likes.likesNum, status: stat})
+            })
+            
+        })
+    }
+    else res.send(false)
 })
 /*** Get requests end ***/
 
 /*** Post requests***/
 
 app.post("/signup",(req,res)=>{
-    const password=req.body.password
-    const phone=req.body.phone
-    if(password!==req.body.repass){
-        res.render("signup",{idiocy: true, matchErr: true, passErr: false, phoneErr: false})
-    }
-    else if(password.length<8){
-        res.render("signup",{idiocy: true, matchErr: false, passErr: true, phoneErr: false})
-    }
-    else if(!phone.match(/[0-9]/g) || phone.length!==10){
-        res.render("signup",{idiocy: true, matchErr: false, passErr: false, phoneErr: true})
-    }
-    else{
-        let admin=false
-        if(req.body.admin) admin=true
-        User.register({
-            username: req.body.username.replace(/>/g,"&gt;").replace(/</g,"&lt;"),
-            name: req.body.name.replace(/>/g,"&gt;").replace(/</g,"&lt;"),
-            lastSeen: `on ${new Date().toLocaleDateString()} at ${new Date().toLocaleTimeString()}`,
-            phone: phone,
-            admin: admin,
-            googleId: "NA"
-        },password,(err, user)=>{
-            if(err){
-                console.log(err)
-                res.redirect("/signup")
-            }
-            else{
-                passport.authenticate("local")(req, res, ()=>{
-                    res.redirect("/")
-                })
-            }
-        })
+    if(req.isUnauthenticated()){
+        const password=req.body.password
+        const phone=req.body.phone
+        if(password!==req.body.repass){
+            res.render("signup",{idiocy: true, matchErr: true, passErr: false, phoneErr: false})
+        }
+        else if(password.length<8){
+            res.render("signup",{idiocy: true, matchErr: false, passErr: true, phoneErr: false})
+        }
+        else if(!phone.match(/[0-9]/g) || phone.length!==10){
+            res.render("signup",{idiocy: true, matchErr: false, passErr: false, phoneErr: true})
+        }
+        else{
+            let admin=false
+            if(req.body.admin) admin=true
+            User.register({
+                username: req.body.username.replace(/>/g,"&gt;").replace(/</g,"&lt;"),
+                name: req.body.name.replace(/>/g,"&gt;").replace(/</g,"&lt;"),
+                lastSeen: `on ${new Date().toLocaleDateString()} at ${new Date().toLocaleTimeString()}`,
+                phone: phone,
+                admin: admin,
+                googleId: "NA"
+            },password,(err, user)=>{
+                if(err){
+                    console.log(err)
+                    res.redirect("/signup")
+                }
+                else{
+                    passport.authenticate("local")(req, res, ()=>{
+                        res.redirect("/")
+                    })
+                }
+            })
 
+        }
     }
+    else res.redirect("/profile/"+req.user.username)
 })
 
 app.post("/login",(req,res)=>{
@@ -233,13 +285,18 @@ app.post("/newpost",(req,res)=>{
             post: req.body.content.replace(/>/g,"&gt;").replace(/</g,"&lt;"),
             date: new Date().toLocaleDateString(),
             op: req.user.username,
-            postId: postId
+            postId: postId,
+            likes: {
+                likesNum: 0,
+                likers: []
+            }
         })
         news.save()
         res.redirect("/post/"+postId)
     }
     else res.redirect("/login")
 })
+
 /*** Post requests end ***/
 /*** Routes end ***/
 app.use((req,res)=>{
