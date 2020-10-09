@@ -4,7 +4,7 @@
 Now let's break it down. 
 
 The backend for this Sexy webapp is entirely written in Node.js. I have used MongoDB as the database.
-The app can be run by using the command *node app.js* in the root directory. The webpage can be viewed by going to *localhost:6969* (\*wink\*).
+The app can be run by first installing all the packages using *npm i* and then using the command *node app.js* in the root directory. The webpage can be viewed by going to *localhost:6969* (\*wink\*).
 
 ### I have not worked on the app's frontend much, if at all. I have entirely used bootstrap and internet downloaded templates.
 So now if it looks ugly, you know why. *Please don't @ me if you don't like the looks of this app*. I could have obviously made it prettier, but then I would've been even more sleep deprived, and this is a backend task anyway.
