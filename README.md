@@ -1,4 +1,4 @@
-# Instruoapp - The Sexy Webapp
+# Instruo app - The Sexy Webapp
 
 *Finally* got done with this. Only took me what, like *20+* hours? Easy Peasy. I am *totally* not sleep deprived. ~~**Pick me.**~~
 Now let's break it down. 
@@ -14,7 +14,7 @@ There are various packages that I have used in this app. Let's have a look.
 1. ***Express***:  Easily the best node.js web framework.
 1. ***Mongoose***: Node js package for easier mongoDB database management.
 1. ***Passport***: Authentication package.
-Rest all are middlewares or helper packages.
+1. Rest all are middlewares or helper packages.
 
 ## Using the Sexy Webapp
 
@@ -25,9 +25,11 @@ Rest all are middlewares or helper packages.
 * After signing in, the user can or cannot post news depending upon whether the user decided to be an Admin or not. Admins will have a *Create Post* button on the right side of the homepage.
 * After the post is made, the user will be redirected to the post's own page. This page can also be accessed by clicking **Read More** on the respective post on the homepage.
 * Any user (whether admin or not) can like any post by going to the post's page. But only the user who actually made that post can delete it.
-* Signed Out users can log in by clicking on the **Log In** button on the navbar. **Log In with google will also not work, obviously.**
-* Every user has a *Profile* page which can be accessed using the **Profile** button on the navbar.
-* The profile page shows all details about the user, including all the posts that the user has liked.
+* Users can log out by clicking on **Log Out** on the homepage navbar.
+* Logged out users can log back in by clicking on the **Log In** button on the homepage navbar. **Log In with google will also not work, obviously.**
+* Every user has a *profile* page which can be accessed using the **Profile** button on the navbar. The profile page shows all details about the user, including all the posts that the user has liked (the required cart system).
 
+## Conclusion
 I think that about sums it up. I am sure you are going to pick me, after all I have made this web app so sexy (**not in terms of looks**).
+I would like to mention that the code I have used in the backend of this web app is entirely by me. I have not used any help from someone else or the internet (minus the docs, stack overflow (bless that website) and the almighty google.co.in. I am starting to think that I haven't really written anything by myself lul).
 Anyway, this was a lot of fun, now I am going back to sleep. I need those sweet sweet 13 hours of sleep in a day.
