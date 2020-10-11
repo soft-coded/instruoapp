@@ -33,6 +33,8 @@ There are various packages that I have used in this app. Let's have a look.
 * **Step 1**
 
     Install the latest LTS version of node js on you pc by [going to the official node js website](https://nodejs.org/en/download/).
+    
+    Then install MongoDB by following the steps [here](https://docs.mongodb.com/manual/administration/install-community/).
 * **Step 2**
 
     Clone this repo
@@ -51,8 +53,7 @@ There are various packages that I have used in this app. Let's have a look.
     
       $ node app.js
 ### Use the app in browser
-    
-    Enter the url localhost:6969
+* Enter the url *localhost:6969*
 
 ## Using the Sexy Webapp
 
