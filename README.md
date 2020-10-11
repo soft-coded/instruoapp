@@ -32,7 +32,7 @@ There are various packages that I have used in this app. Let's have a look.
 ### Server setup
 * **Step 1**
 
-    Install the latest LTS version of node js on you pc by [going to the official node js website](https://nodejs.org/en/download/).
+    Install the latest LTS version of node js on your pc by [going to the official node js website](https://nodejs.org/en/download/).
     
     Then install MongoDB by following the steps [here](https://docs.mongodb.com/manual/administration/install-community/).
 * **Step 2**
