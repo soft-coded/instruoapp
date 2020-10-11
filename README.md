@@ -8,6 +8,60 @@ A simple app to submit as the instruo task. Let's break it down.
 * **I have not worked on the app's frontend much, if at all. I have entirely used bootstrap and internet downloaded templates.**  So now if it looks ugly, you know why. ***Please don't @ me if you don't like the looks of this app***. I could have obviously made it prettier, but that was not the task.
 * I have not used semicolons anywhere because I don't like them. That's the sole reason I main Python.
 
+## Setup
+
+### Server setup
+
+* **Step 1**
+
+
+
+    Install the latest LTS version of node js on your pc by [going to the official node js website](https://nodejs.org/en/download/).
+
+    
+
+    Then install MongoDB by following the steps [here](https://docs.mongodb.com/manual/administration/install-community/).
+
+* **Step 2**
+
+
+
+    Clone this repo
+
+    
+
+      $ git clone https://github.com/soft-coded/instruoapp
+
+* **Step 3**
+
+
+
+    Install all the dependencies
+
+      
+
+      $ cd your_directory/instruoapp
+
+      
+
+      $ npm i
+
+* **Step 4**
+
+
+
+    Run the app
+
+    
+
+      $ node app.js
+
+### Use the app in browser
+
+* Enter the url *localhost:6969*
+
+
+
 ## Packages
 There are various packages that I have used in this app. Let's have a look.
 
@@ -27,33 +81,6 @@ There are various packages that I have used in this app. Let's have a look.
   
   Reminder that I have not worked much on the frontend.
   
-
-## Setup
-### Server setup
-* **Step 1**
-
-    Install the latest LTS version of node js on your pc by [going to the official node js website](https://nodejs.org/en/download/).
-    
-    Then install MongoDB by following the steps [here](https://docs.mongodb.com/manual/administration/install-community/).
-* **Step 2**
-
-    Clone this repo
-    
-      $ git clone https://github.com/soft-coded/instruoapp
-* **Step 3**
-
-    Install all the dependencies
-      
-      $ cd your_directory/instruoapp
-      
-      $ npm i
-* **Step 4**
-
-    Run the app
-    
-      $ node app.js
-### Use the app in browser
-* Enter the url *localhost:6969*
 
 ## Using the Sexy Webapp
 
