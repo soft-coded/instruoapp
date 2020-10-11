@@ -14,54 +14,33 @@ A simple app to submit as the instruo task. Let's break it down.
 
 * **Step 1**
 
-
-
     Install the latest LTS version of node js on your pc by [going to the official node js website](https://nodejs.org/en/download/).
-
-    
 
     Then install MongoDB by following the steps [here](https://docs.mongodb.com/manual/administration/install-community/).
 
 * **Step 2**
 
-
-
     Clone this repo
-
-    
-
+      
       $ git clone https://github.com/soft-coded/instruoapp
 
 * **Step 3**
 
-
-
     Install all the dependencies
 
-      
+        $ cd your_directory/instruoapp
 
-      $ cd your_directory/instruoapp
-
-      
-
-      $ npm i
+        $ npm i
 
 * **Step 4**
 
-
-
     Run the app
-
     
-
       $ node app.js
 
 ### Use the app in browser
 
 * Enter the url *localhost:6969*
-
-
-
 ## Packages
 There are various packages that I have used in this app. Let's have a look.
 
