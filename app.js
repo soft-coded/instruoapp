@@ -19,7 +19,7 @@ app.use(bodyParser.urlencoded({extended: true}))
 app.use(bodyParser.json())
 
 app.use(session({
-        secret: "kek",
+        secret: process.env.SESSION_SECRET,
         resave: false,
         saveUninitialized: false
     })
@@ -30,7 +30,7 @@ app.use(passport.session())
 
 /*** Mongoose setup ***/
 
-mongoose.connect("mongodb://localhost:27017/instruoDB", {
+mongoose.connect(process.env.DB_URL, {
     useNewUrlParser: true,
     useUnifiedTopology: true,
     useFindAndModify: false,
@@ -54,7 +54,7 @@ passport.use(new GoogleStrategy({
         clientID: process.env.CLIENT_ID,
         clientSecret: process.env.CLIENT_SECRET,
         callbackURL: "http://localhost:6969/auth/google/instruoapp"
-    }, (accessToken, refreshToken, profile, cb)=>{
+    }, (_at, _rt, profile, cb)=>{
         User.findOne({ googleId: profile.id },(err, user)=>{
             if(err) console.log(err)
             else if(user) cb(err, user)
@@ -79,4 +79,4 @@ passport.use(new GoogleStrategy({
 app.use(router)
 /*** Routes end ***/
 
-app.listen(6969,()=>{console.log("6969 hehe")})
+app.listen(6969)

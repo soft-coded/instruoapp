@@ -27,11 +27,11 @@ app.get("/",(req,res)=>{
     })
 })
 
-app.get("/signup",(req,res)=>{
+app.get("/signup",(_,res)=>{
     res.render("signup",{idiocy: false, matchErr: false, phoneErr: false, passErr: false})
 })
 
-app.get("/login",(req,res)=>{
+app.get("/login",(_,res)=>{
     res.render("login", {err: false})
 })
 
@@ -45,7 +45,7 @@ app.get("/logout",(req,res)=>{
     res.redirect("/")
 })
 
-app.get("/newpost",(req,res)=>{
+app.get("/newpost",(_,res)=>{
     res.render("newpost")
 })
 
@@ -212,7 +212,7 @@ app.post("/newpost",(req,res)=>{
 })
 
 /*** Post requests end ***/
-app.use((req,res)=>{
+app.use((_,res)=>{
     res.status(404).render("404")
 })
 
