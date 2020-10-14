@@ -80,4 +80,13 @@ There are various packages that I have used in this app. Let's have a look.
 I think that about sums it up. I would like to mention that the code I have used in the backend of this web app is entirely by me. I have not used any help from someone else or the internet (minus the docs, stack overflow (bless that website) and the almighty google.co.in).
 
 ## Updates
-* Made some changes to the app.js file. Now the session secret and a few other things are environment variables.
+### Revamped the Admin process.
+* A user can now only "Request admin privileges" while signing up.
+* When a user requests admin privileges, the request is stored in the database.
+* An admin request contains the user's email(username), the display name and phone number. These help pinpointing who actually made the request.
+* **IMPORTANT POINT**: All admin requests can be viewed by going to *localhost:6969/requests/for_admin/<REQUEST_KEY>*, where <REQUEST_KEY> is an encrypted key stored in the .env file under the name REQUEST_KEY. **This way, only those who actually know the request key (namely, the devs) can access the Admin Requests page.**
+* If the key entered is correct, you will be redirected to the Admin Requests page. This page will display all the users who had made an admin request during signup.
+* You can pick one of the two options. Either make the user admin by ticking the *Make Admin* checkbox, or discard the admin request by ticking the *Discard Request* checkbox.
+**Checking both will still make the user an admin.** There is a reason why I did not use radio buttons here.
+* Once you are done granting or rejecting requests, you can click on *Save* to save all the changes. Those whom you made admin will become admin, and the users whose requests you discarded will not. Either way, all the requests which had an action taken upon will be removed from all admin requests.
+* I tried to use the concept of a SuperAdmin, but it didn't work out so I came up with this solution. I think it works much the same way, and it definitely is faster. 
