@@ -87,6 +87,7 @@ I think that about sums it up. I would like to mention that the code I have used
 * **IMPORTANT POINT**: All admin requests can be viewed by going to *localhost:6969/requests/for_admin/<REQUEST_KEY>*, where <REQUEST_KEY> is an encrypted key stored in the .env file under the name REQUEST_KEY. **This way, only those who actually know the request key (namely, the devs) can access the Admin Requests page.**
 * If the key entered is correct, you will be redirected to the Admin Requests page. This page will display all the users who had made an admin request during signup.
 * You can pick one of the two options. Either make the user admin by ticking the *Make Admin* checkbox, or discard the admin request by ticking the *Discard Request* checkbox.
-**Checking both will still make the user an admin.** There is a reason why I did not use radio buttons here.
+**Checking both will still make the user an admin.** The reason why I did not use radio buttons here is that I had to give different values in the "name" field for both "Make admin" and "Discard request", and checkboxes can be unchecked whenever needed. So it's a win-win.
 * Once you are done granting or rejecting requests, you can click on *Save* to save all the changes. Those whom you made admin will become admin, and the users whose requests you discarded will not. Either way, all the requests which had an action taken upon will be removed from all admin requests.
-* I tried to use the concept of a SuperAdmin, but it didn't work out so I came up with this solution. I think it works much the same way, and it definitely is faster. 
+* Admins have no way of making other users admin. Only the devs get to decide who all will be admins.
+* **Side note:** I tried to use the concept of a SuperAdmin, but it didn't work out so I came up with this solution. I think it works much the same way, and it definitely is faster. 
