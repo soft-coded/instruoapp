@@ -19,7 +19,7 @@ app.use(bodyParser.urlencoded({extended: true}))
 app.use(bodyParser.json())
 
 app.use(session({
-        secret: process.env.SESSION_SECRET,
+        secret: process.env.SESSION_SECRET, // be sure to change this
         resave: false,
         saveUninitialized: false
     })
@@ -29,8 +29,7 @@ app.use(passport.session())
 /*** App setup end ***/
 
 /*** Mongoose setup ***/
-
-mongoose.connect(process.env.DB_URL, {
+mongoose.connect("mongodb://localhost:27017/instruoDB", {
     useNewUrlParser: true,
     useUnifiedTopology: true,
     useFindAndModify: false,

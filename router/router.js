@@ -1,6 +1,7 @@
 const express=require("express")
 const User=require("../schemas/user_schema")
 const News=require("../schemas/news_schema")
+const AdminReq=require("../schemas/admin_req")
 const passport=require("passport")
 
 
@@ -126,6 +127,13 @@ app.get("/likepost/:postId",(req,res)=>{
     }
     else res.send(false)
 })
+
+app.get("/requests/for_admin/"+process.env.REQUEST_KEY,(_,res)=>{
+    AdminReq.find({},(err,results)=>{
+        if(err) console.log(err)
+        else res.render("adminreqs",{reqs: results, reqKey: process.env.REQUEST_KEY})
+    })
+})
 /*** Get requests end ***/
 
 /*** Post requests***/
@@ -144,16 +152,24 @@ app.post("/signup",(req,res)=>{
             res.render("signup",{idiocy: true, matchErr: false, passErr: false, phoneErr: true})
         }
         else{
-            let admin=false
-            if(req.body.admin) admin=true
+            let newUsername=req.body.username.replace(/>/g,"&gt;").replace(/</g,"&lt;")
+            let newName=req.body.name.replace(/>/g,"&gt;").replace(/</g,"&lt;")
+            if(req.body.admin){
+                new AdminReq({
+                    username: newUsername,
+                    phone: phone,
+                    name: newName
+                }).save()
+            } 
             User.register({
-                username: req.body.username.replace(/>/g,"&gt;").replace(/</g,"&lt;"),
-                name: req.body.name.replace(/>/g,"&gt;").replace(/</g,"&lt;"),
+                username: newUsername,
+                name: newName,
                 lastSeen: `on ${new Date().toLocaleDateString()} at ${new Date().toLocaleTimeString()}`,
                 phone: phone,
-                admin: admin,
+                liked: [],
+                admin: false,
                 googleId: "NA"
-            },password,(err, user)=>{
+            },password,(err)=>{
                 if(err){
                     console.log(err)
                     res.redirect("/signup")
@@ -211,10 +227,23 @@ app.post("/newpost",(req,res)=>{
     else res.redirect("/login")
 })
 
+app.post("/requests/for_admin/"+process.env.REQUEST_KEY,(req,res)=>{
+    User.find({username: {$in: req.body.granted}},(err,results)=>{
+        if(err) console.log(err)
+        else{
+            results.forEach((user)=>{
+                user.admin=true
+                user.save()
+                AdminReq.deleteOne({username: user.username},()=>{})
+            })
+        }
+        res.redirect("/")
+    })
+})
+
 /*** Post requests end ***/
 app.use((_,res)=>{
     res.status(404).render("404")
 })
-
 
 module.exports=app

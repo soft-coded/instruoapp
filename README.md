@@ -78,3 +78,6 @@ There are various packages that I have used in this app. Let's have a look.
 
 ## Conclusion
 I think that about sums it up. I would like to mention that the code I have used in the backend of this web app is entirely by me. I have not used any help from someone else or the internet (minus the docs, stack overflow (bless that website) and the almighty google.co.in).
+
+## Updates
+* Made some changes to the app.js file. Now the session secret and a few other things are environment variables.
