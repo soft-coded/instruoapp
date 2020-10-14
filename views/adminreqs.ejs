@@ -24,7 +24,9 @@
                                         <span class="text-muted mt-2"><%= req.name %></span>
                                         <span class="text-muted mt-2"><%= req.phone %></span>
                                         <input type="checkbox" name="granted[]" value="<%=req.username%>">
-                                        <label>Make admin</label>
+                                        <label>Make admin</label>&nbsp; &nbsp;
+                                        <input type="checkbox" name="rejected[]" value="<%=req.username%>">
+                                        <label>Discard Request</label>
                                         <hr>
                                     </li>                                   
                                 <% }) %>

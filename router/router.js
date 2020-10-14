@@ -234,11 +234,12 @@ app.post("/requests/for_admin/"+process.env.REQUEST_KEY,(req,res)=>{
             results.forEach((user)=>{
                 user.admin=true
                 user.save()
-                AdminReq.deleteOne({username: user.username},()=>{})
+                AdminReq.deleteOne({username: user.username},(err)=>err?console.log(err):null)
             })
         }
-        res.redirect("/")
     })
+    AdminReq.deleteMany({username: {$in: req.body.rejected}},(err)=>err?console.log(err):null)
+    res.redirect("/")
 })
 
 /*** Post requests end ***/
