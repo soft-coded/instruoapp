@@ -20,21 +20,22 @@ app.get("/",(req,res)=>{
                 User.findOne({username: req.user.username},(err,result)=>{
                     if(err) console.log(err)
                     if(result.admin) admin=true
-                    res.render("home",{authed: authed, admin: admin, news: news})
+                    res.json({authed: authed, admin: admin, news: news})
                 })
             }
-            else res.render("home",{authed: authed, admin: admin, news: news})
+            else res.json({authed: authed, admin: admin, news: news})
         }
     })
 })
 
-app.get("/signup",(_,res)=>{
-    res.render("signup",{idiocy: false, matchErr: false, phoneErr: false, passErr: false})
-})
+// This will be handeled by the frontend people
+// app.get("/signup",(_,res)=>{
+//     res.render("signup",{idiocy: false, matchErr: false, phoneErr: false, passErr: false})
+// })
 
-app.get("/login",(_,res)=>{
-    res.render("login", {err: false})
-})
+// app.get("/login",(_,res)=>{
+//     res.render("login", {err: false})
+// })
 
 app.get('/auth/google', passport.authenticate('google', {scope: ['email', 'profile']}))
 
@@ -46,9 +47,10 @@ app.get("/logout",(req,res)=>{
     res.redirect("/")
 })
 
-app.get("/newpost",(_,res)=>{
-    res.render("newpost")
-})
+// Should be handled by the frontend guys
+// app.get("/newpost",(_,res)=>{
+//     res.render("newpost")
+// })
 
 app.get("/post/:postId",(req,res)=>{
     const numId=Number(req.params.postId)
@@ -63,7 +65,7 @@ app.get("/post/:postId",(req,res)=>{
                 let ind=result.likes.likers.indexOf(req.user.username)
                 if(ind>-1) hasLiked=true
             }    
-            res.render("post",{post: result, sameUser: sameUser, hasLiked: hasLiked})    
+            res.json({post: result, sameUser: sameUser, hasLiked: hasLiked})    
         }
     })
 })
@@ -91,7 +93,7 @@ app.get("/profile/:email",(req,res)=>{
                 if(err) return console.log(err)
                 result.lastSeen=`on ${new Date().toLocaleDateString()} at ${new Date().toLocaleTimeString()}`
                 result.save()
-                res.render("profile",{user: result, likedPosts: likedNews})
+                res.json({user: result, likedPosts: likedNews})
             })
         } 
     })
@@ -131,7 +133,7 @@ app.get("/likepost/:postId",(req,res)=>{
 app.get("/requests/for_admin/"+process.env.REQUEST_KEY,(_,res)=>{
     AdminReq.find({},(err,results)=>{
         if(err) console.log(err)
-        else res.render("adminreqs",{reqs: results, reqKey: process.env.REQUEST_KEY})
+        else res.json({reqs: results, reqKey: process.env.REQUEST_KEY})
     })
 })
 /*** Get requests end ***/
@@ -143,13 +145,13 @@ app.post("/signup",(req,res)=>{
         const password=req.body.password
         const phone=req.body.phone
         if(password!==req.body.repass){
-            res.render("signup",{idiocy: true, matchErr: true, passErr: false, phoneErr: false})
+            res.json({matchErr: true, passErr: false, phoneErr: false})
         }
         else if(password.length<8){
-            res.render("signup",{idiocy: true, matchErr: false, passErr: true, phoneErr: false})
+            res.json({matchErr: false, passErr: true, phoneErr: false})
         }
         else if(!phone.match(/[0-9]/g) || phone.length!==10){
-            res.render("signup",{idiocy: true, matchErr: false, passErr: false, phoneErr: true})
+            res.json({matchErr: false, passErr: false, phoneErr: true})
         }
         else{
             let newUsername=req.body.username.replace(/>/g,"&gt;").replace(/</g,"&lt;")
@@ -189,7 +191,9 @@ app.post("/signup",(req,res)=>{
 app.post("/login",(req,res)=>{
     passport.authenticate('local', (err,user)=>{
         if(err) console.log(err)
-        else if(!user) res.render("login",{err: true})
+        //  else if(!user)
+        //  To be handled in the frontend 
+            //  res.render("login",{err: true})
         else{
             req.logIn(user,(err)=>{
                 if(err) console.log(err)
@@ -243,6 +247,7 @@ app.post("/requests/for_admin/"+process.env.REQUEST_KEY,(req,res)=>{
 })
 
 /*** Post requests end ***/
+// keeping this for errors, but should be handled in the frontend as well
 app.use((_,res)=>{
     res.status(404).render("404")
 })
