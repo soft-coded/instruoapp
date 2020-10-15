@@ -90,4 +90,7 @@ I think that about sums it up. I would like to mention that the code I have used
 **Checking both will still make the user an admin.** The reason why I did not use radio buttons here is that I had to give different values in the "name" field for both "Make admin" and "Discard request", and checkboxes can be unchecked whenever needed. So it's a win-win.
 * Once you are done granting or rejecting requests, you can click on *Save* to save all the changes. Those whom you made admin will become admin, and the users whose requests you discarded will not. Either way, all the requests which had an action taken upon will be removed from all admin requests.
 * Admins have no way of making other users admin. Only the devs get to decide who all will be admins.
-* **Side note:** I tried to use the concept of a SuperAdmin, but it didn't work out so I came up with this solution. I think it works much the same way, and it definitely is faster. 
+* **Side note:** I tried to use the concept of a SuperAdmin, but it didn't work out so I came up with this solution. I think it works much the same way, and it definitely is faster.
+
+### Replaced all the template rendering with JSON packets.
+* Now the app will only send JSON data which should then be handled accordingly by the frontend devs. 
